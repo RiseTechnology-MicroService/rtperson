@@ -94,5 +94,19 @@ namespace rtperson.Controllers
             return response;
         }
 
+        [HttpGet, Route("get-report/{location}")]
+        public async Task<GenericResponse<ReportResultModel>> GetReport([FromRoute] string location)
+        {
+            var response = new GenericResponse<ReportResultModel>();
+            var serviceResponse = await personsService.GetReport(location);
+
+            if (serviceResponse.Success)
+                response.SetSuccess(serviceResponse.Data!);
+
+            else
+                response.SetFailure(serviceResponse.GetErrors());
+
+            return response;
+        }
     }
 }

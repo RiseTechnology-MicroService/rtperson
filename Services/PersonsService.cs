@@ -56,6 +56,22 @@ namespace rtperson.Services
             return response;
         }
 
+        public async Task<ServiceResponse<ReportResultModel>> GetReport(string location)
+        {
+            var response = new ServiceResponse<ReportResultModel>();
+
+            ReportResultModel result;
+
+            var persons = await _repo.GetListAsync(s => s.Contacts.Any(x => x.Type == ContactType.Location && x.Value == location));
+            if (persons != null)
+                result = new ReportResultModel(persons.Count, persons.SelectMany(s => s.Contacts).Count());
+            else
+                result = new ReportResultModel(0, 0);
+
+            response.SetData(result);
+            return response;
+        }
+
         public async Task<ServiceResponse<List<Person>>> GetListAsync()
         {
             var response = new ServiceResponse<List<Person>>();
