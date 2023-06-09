@@ -9,7 +9,7 @@ namespace rtperson.Services
         public LogRequestService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(configuration.GetValue<string>("Services:LoggerURL")!);
+            _httpClient.BaseAddress = new Uri(configuration.GetValue<string>("Services:rtlogURL")!);
         }
         public async Task SendLogAsync(SendLogModel data)
         {
